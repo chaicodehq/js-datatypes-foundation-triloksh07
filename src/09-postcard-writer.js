@@ -52,21 +52,67 @@
  *   countVowels("Namaste")     // => 3
  */
 export function writePostcard(sender, receiver, message) {
-  // Your code here
+  if (
+    typeof sender !== "string" ||
+    typeof receiver !== "string" ||
+    typeof message !== "string"
+  ) return "";
+
+  if (sender.trim() === "" || receiver.trim() === "" || message.trim() === "") return "";
+
+  return `Priy ${receiver},\n\n${message}\n\nAapka\/Aapki,\n${sender}`;;
 }
 
 export function isValidPincode(code) {
-  // Your code here
+
+  if (typeof code !== "string") return false;
+  // if (code.length !== 6) return false;
+  if (code.startsWith(0)) return false;
+
+  // only check if any one number is present /^\d+$/
+  // if (!/^\d+$/.test(code)) return false;
+
+  // check length {6}
+  // if (!/^\d{6}$/.test(code)) return false;
+  if (!/^[1-9]\d{5}$/.test(code)) return false;
+
+  return true;
 }
 
-export function formatPostcardField(label, value, width) {
-  // Your code here
+export function formatPostcardField(label, value, width = 12) {
+  if (typeof label !== "string" || typeof value !== "string") return "";
+  return `${label.padEnd(width)}: ${value}`;
 }
 
 export function isFromState(address, stateCode) {
-  // Your code here
+  if (typeof address !== "string" || typeof stateCode !== "string") return false;
+
+  // endsWith(stateCode) works only if the state code is literally 
+  // at the end of the string
+  // return address.endsWith(stateCode);
+
+  // For addresses, we might want a more robust check
+  // return address.includes(stateCode);
+
+  // Or regex with word boundaries:
+  return new RegExp(`\\b${stateCode}\\b`).test(address);
+
+  // If the address was "123 Main Street, ANYWHERE", it would return false because "NY" is inside "ANYWHERE" but not a standalone word.
+
+  /*
+  *   What it does:
+  * new RegExp(...) creates a regular expression dynamically.
+  * `\\b${stateCode}\\b` means:
+  * \\b is a word boundary in regex (it matches the edge between a word character and a non-word character).
+  * ${stateCode} is the variable inserted into the regex.
+  * So the whole pattern looks for the state code as a complete word, not just as part of another word.
+  * .test(address) checks if the regex matches anywhere in the address string.
+  */
 }
 
 export function countVowels(message) {
-  // Your code here
+  if (typeof message !== "string" || message === "") return 0;
+  // let vowels = message.match(/[aeiouAEIOU]/g);
+  let vowels = message.match(/[aeiou]/gi);
+  return vowels === null ? 0 : vowels.length;
 }

@@ -73,7 +73,6 @@ export function updatePrices(menu, increase) {
   console.log(merged);
   return newObj;
 }
-updatePrices({ meetha: 30, saada: 20 }, 10);
 
 export function mergeDailySpecials(regularMenu, specialsMenu) {
   if (
